@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface ITodoElement {
-  id: number;
+  id: string;
   task: string;
   isComplete: boolean;
 }
@@ -22,18 +22,6 @@ const TodoList = ({ todos }: Props) => {
     item.isComplete = !item.isComplete;
   };
 
-  const deleteItemByKey = (
-    array: ITodoElement[],
-    key: keyof ITodoElement,
-    value: number | string | boolean
-  ) => {
-    const index = array.findIndex((item) => item[key] === value);
-    if (index !== -1) {
-      array.splice(index, 1);
-    }
-    return array;
-  };
-
   const handleCard = (item: ITodoElement) => {
     navigate(`/todo/details/${item.id}`);
   };
@@ -42,26 +30,40 @@ const TodoList = ({ todos }: Props) => {
     // if (confirm("Are you sure you want to delete this Task?")) {
     //   setTodos(todos.filter((value) => item.id !== value.id));
     // }
-    setTodo(todos.filter((value) => item.id !== value.id));
-    deleteItemByKey(todos, "id", item.id);
+    // setTodo(todos.filter((value) => item.id !== value.id));
+    // deleteItemByKey(todos, "id", item.id);
+
+    fetch("http://localhost:5000/todos/" + String(item.id), {
+      method: "DELETE",
+    }).then(() => {
+      console.log("Task Deleted !! with id : " + item.id);
+      navigate("/");
+    });
   };
 
   const handleInput = (str: string) => {
     setStr(str);
   };
 
-  const addTodo = () => {
-    const todo = {
-      id: Math.random() * 2000,
+  //   const history = useHistory();
+
+  const handleSubmit = () => {
+    const todoItem = {
+      id: `"${Math.random() * 2000}"`,
       task: str,
       isComplete: false,
     };
-    setTodo([...todos, todo]);
 
-    const updatedDto = [...todos, { ...todo, isComplete: false }];
-    todos.push({ ...todo, isComplete: false });
-    setStr("");
-    navigate("/");
+    fetch("http://localhost:5000/todos", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(todoItem),
+    }).then(() => {
+      console.log("Added Task Success !!");
+      setTodo([...todos, todoItem]);
+      setStr("");
+      navigate("/");
+    });
   };
 
   return (
@@ -74,7 +76,7 @@ const TodoList = ({ todos }: Props) => {
       />
       &nbsp;&nbsp;
       <button
-        onClick={addTodo}
+        onClick={handleSubmit}
         disabled={!Boolean(str.length)}
         className="btn btn-secondary"
       >
