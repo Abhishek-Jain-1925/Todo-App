@@ -6,7 +6,6 @@ const Taskdetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const {error,isPending,data: todoItem} : any = useFetch("http://localhost:5000/todos/" + id);
-  console.log(todoItem);
 
   const handleClick = () => {
     fetch("http://localhost:5000/todos/" + id, {
@@ -23,21 +22,15 @@ const Taskdetails = () => {
       {error && <div>{error}</div>}
       {todoItem && (
         <article>
-          <h2>{id}</h2>
-          <p>Task : { todoItem?.task}</p>
-          <p>Status : {todoItem?.isComplete === true ? "Completed" : "Incomplete"}</p>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <button className="btn btn-secondary m-2" onClick={handleClick}>
-              Delete Task
-            </button>
+          <h4>{id}</h4>
+          <p><b>Task : </b>{ todoItem?.task}</p>
+          <p><b>Status : </b>{todoItem?.isComplete === true ? "Completed" : "Incomplete"}</p>
+          <p><b>Due Date : </b>{ todoItem?.dueDate }</p>
+
+          <div style={{display: "flex", alignItems: "center", justifyContent: "center" }} >
+            <button className="btn btn-secondary m-2" onClick={handleClick}> Delete Task </button>
             <Link to="/">
-              <button className="btn btn-secondary">Back to Home</button>
+              <button className="btn btn-secondary"> Back to Home </button>
             </Link>
           </div>
         </article>

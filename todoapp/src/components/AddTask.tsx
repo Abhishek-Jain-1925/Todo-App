@@ -1,19 +1,19 @@
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AddTask = () => {
-  const [str, setStr] = useState("");
+  const [title, setTitle] = useState("");
+  const [dueDate, setDueDate] = useState("");
   const navigate = useNavigate();
 
-  const handleInput = (str: string) => {
-    setStr(str);
-  };
+  const addTodo = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  const addTodo = () => {
     const todoItem = {
       id: `"${Math.random() * 2000}"`,
-      task: str,
+      task: title,
       isComplete: false,
+      dueDate : dueDate
     };
 
     fetch("http://localhost:5000/todos", {
@@ -21,30 +21,24 @@ const AddTask = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(todoItem),
     }).then(() => {
-      setStr("");
+      setTitle("");
+      setDueDate("");
       navigate("/");
     });
   };
 
   return (
-    <div>
-      <center>
-        <h1> ToDo App </h1>
-        <input
-          type="text"
-          value={str}
-          autoFocus
-          onChange={(e) => handleInput(e.target.value)}
-        />
-        &nbsp;&nbsp;
-        <button
-          onClick={addTodo}
-          disabled={!Boolean(str.length)}
-          className="btn btn-secondary"
-        >
-          Add
-        </button>
-      </center>
+    <div className="form-details text-center">
+        <form onSubmit={addTodo}>
+            <h2>- Add Task - </h2>
+            <label htmlFor="title">Title : </label>
+            <input type="text" name="title" id="title" value={title} onChange={(e)=>setTitle(e.target.value)} required/><br/>
+            
+            <label htmlFor="due-date">Due Date : </label>
+            <input type="date" name="dueDate" id="dueDate" value={dueDate} onChange={(e)=>setDueDate(e.target.value)} required/><br/><br/>
+
+            <button className="btn btn-secondary" disabled={!Boolean(title.length)}>Add Task</button>
+        </form>
     </div>
   );
 };
