@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface ITodoElement {
@@ -13,8 +13,9 @@ interface Props {
 
 const TodoList = ({ todos }: Props) => {
   const [checked, setChecked] = useState(false);
-  const [todo, setTodo] = useState<Array<ITodoElement>>(todos);
-  const [str, setStr] = useState("");
+  const [search, setSearch] = useState("");
+  //const [filteredTodos, setFilteredTodos] = useState(todos); //Optional, when using useEffect only
+  const [sortDirection, setSortDirection] = useState("0");
   const navigate = useNavigate();
 
   const handleStatus = (item: ITodoElement) => {
@@ -23,105 +24,56 @@ const TodoList = ({ todos }: Props) => {
   };
 
   const handleCard = (item: ITodoElement) => {
-    navigate(`/todo/details/${item.id}`);
+    navigate(`/task/${item.id}`);
   };
 
-  const handleDelete = (item: ITodoElement) => {
-    // if (confirm("Are you sure you want to delete this Task?")) {
-    //   setTodos(todos.filter((value) => item.id !== value.id));
-    // }
-    // setTodo(todos.filter((value) => item.id !== value.id));
-    // deleteItemByKey(todos, "id", item.id);
+  // useEffect(()=>{
+  //   setFilteredTodos(todos.filter((todo)=>todo.task.includes(search)))
+  // },[search, filteredTodos])
+  //or
+  const filterTodo = useMemo(()=>todos.filter((todo)=> todo.task.includes(search)),
+  [search,todos])
 
-    fetch("http://localhost:5000/todos/" + String(item.id), {
-      method: "DELETE",
-    }).then(() => {
-      console.log("Task Deleted !! with id : " + item.id);
-      navigate("/");
-    });
-  };
-
-  const handleInput = (str: string) => {
-    setStr(str);
-  };
-
-  //   const history = useHistory();
-
-  const handleSubmit = () => {
-    const todoItem = {
-      id: `"${Math.random() * 2000}"`,
-      task: str,
-      isComplete: false,
-    };
-
-    fetch("http://localhost:5000/todos", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(todoItem),
-    }).then(() => {
-      console.log("Added Task Success !!");
-      setTodo([...todos, todoItem]);
-      setStr("");
-      navigate("/");
-    });
-  };
+  const sortedTodos = useMemo(()=>
+    filterTodo.sort((a,b)=>sortDirection==="0" ? (a.task > b.task ? 1 : -1) : (a.task > b.task ? -1 : 1))
+  ,[filterTodo, sortDirection])
 
   return (
     <div className="blog-list text-center">
-      <input
-        type="text"
-        value={str}
-        autoFocus
-        onChange={(e) => handleInput(e.target.value)}
-      />
-      &nbsp;&nbsp;
-      <button
-        onClick={handleSubmit}
-        disabled={!Boolean(str.length)}
-        className="btn btn-secondary"
-      >
-        Add
-      </button>
-      {todos.map((item) => (
+      <div style={{display:"flex"}} className="justify-content-center">
+        <input type="text" placeholder="search todos" value={search} className="m-2" onChange={(e)=>setSearch(e.target.value)}/>
+
+        <label htmlFor="Sort" className="m-2">Sort :</label>
+        <select onChange={(e)=> setSortDirection(e.target.value)} className="m-2" >
+          <option value={"0"}>A-Z</option>
+          <option value={"1"}>Z-A</option>
+        </select>
+      </div>
+
+      {sortedTodos.map((item) => (
         <center>
-          <div
-            className="card w-50"
-            key={item.id}
-            style={{
+          <div className="card w-50" key={item.id}
+             style={{
               border: "0.1px solid grey",
               margin: "10px",
               cursor: "pointer",
-            }}
-          >
-            <div
-              className="card-header"
+            }} >
+            <div className="card-header"
               style={{
                 textDecoration: item.isComplete ? "line-through" : "none",
-              }}
-              onClick={() => handleCard(item)}
-            >
-              <h5>
-                <input
-                  type="checkbox"
-                  name={item.task}
-                  checked={item.isComplete}
-                  onChange={() => handleStatus(item)}
-                />{" "}
-                &nbsp;&nbsp;
+              }} >
+              <div style={{display:"flex"}}>
+                <input type="checkbox" name={item.task} checked={item.isComplete} onChange={() => handleStatus(item)} />{" "} &nbsp;&nbsp;
+                <h3 onClick={() => handleCard(item)}>
                 {item.task}
-              </h5>
+                </h3>
+              </div>
             </div>
 
             <div className="card-body">
               <p className="card-text">
                 <strong>Status :</strong>{" "}
                 {item.isComplete ? "Completed" : "Incomplete"}&nbsp;&nbsp;
-                <button
-                  className="btn btn-secondary"
-                  onClick={() => handleDelete(item)}
-                >
-                  Delete
-                </button>
               </p>
             </div>
           </div>
