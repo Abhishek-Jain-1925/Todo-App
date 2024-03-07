@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 interface ITodoElement {
   id: string;
   task: string;
+  description:string;
   isComplete: boolean;
 }
 
@@ -70,7 +71,7 @@ const TodoList = ({ todos }: Props) => {
               </div>
             </div>
 
-            <div className="card-body">
+            <div className="card-body" >
               <p className="card-text">
                 <strong>Status :</strong>{" "}
                 {item.isComplete ? "Completed" : "Incomplete"}&nbsp;&nbsp;

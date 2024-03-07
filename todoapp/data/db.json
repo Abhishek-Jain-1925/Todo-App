@@ -1,0 +1,50 @@
+{
+  "todos": [
+    {
+      "id": "3",
+      "task": "Assignment on LMS",
+      "isComplete": true,
+      "dueDate": "2024-03-07"
+    },
+    {
+      "id": "\"631.5965446931137\"",
+      "task": "Django WebPack",
+      "description": "kjhgcfx",
+      "assignee": "Abhishek Jain",
+      "isComplete": false,
+      "dueDate": "2024-03-07"
+    },
+    {
+      "id": "\"1240.8963402995048\"",
+      "task": "Sourabh's Birthday",
+      "description": "This is the awesome event !!",
+      "assignee": "Bharale Patil",
+      "isComplete": false,
+      "dueDate": "2024-03-07"
+    },
+    {
+      "id": "\"460.48489923282386\"",
+      "task": "Python Session",
+      "description": "Do Assignment No. 199",
+      "assignee": "Abhishek Jain",
+      "isComplete": false,
+      "dueDate": "2024-03-15"
+    },
+    {
+      "id": "\"1262.7694724105472\"",
+      "task": "Python Assignment",
+      "description": "Do Assignment No.200",
+      "assignee": "Abhishek Jain",
+      "isComplete": false,
+      "dueDate": "2024-03-07"
+    },
+    {
+      "id": "\"1411.5515435213078\"",
+      "task": "Papa's Cricket Match",
+      "description": "Must to Watch",
+      "assignee": "Abhishek Jain",
+      "isComplete": false,
+      "dueDate": "2024-03-08"
+    }
+  ]
+}

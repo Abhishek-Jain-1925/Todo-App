@@ -1,9 +1,8 @@
-import { useEffect } from "react";
 import TodoList from "./TodoList";
 import useFetch from "./useFetch";
 
 const Home = () => {
-  const { error, isPending, data: todos } = useFetch('http://localhost:5000/todos')
+  const { error, isPending, data: todos } = useFetch(process.env.REACT_APP_BASE_URL+'/todos') 
 
   return (
     <div className="home">

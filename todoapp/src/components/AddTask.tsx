@@ -1,5 +1,6 @@
 import { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { GenerateRandomNo } from "../helper/helper";
 
 const AddTask = () => {
   const [title, setTitle] = useState("");
@@ -10,13 +11,13 @@ const AddTask = () => {
     e.preventDefault();
 
     const todoItem = {
-      id: `"${Math.random() * 2000}"`,
+      id: GenerateRandomNo(),
       task: title,
       isComplete: false,
       dueDate : dueDate
     };
 
-    fetch("http://localhost:5000/todos", {
+    fetch(process.env.REACT_APP_BASE_URL+"/todos", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(todoItem),
