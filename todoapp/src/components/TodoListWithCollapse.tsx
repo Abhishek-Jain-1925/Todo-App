@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface ITodoElement {
@@ -12,7 +12,7 @@ interface Props {
   todos: ITodoElement[];
 }
 
-const TodoListWithCollapse   = ({ todos }: Props) => {
+const TodoListWithCollapse = ({ todos }: Props) => {
   const [checked, setChecked] = useState(false);
   const [search, setSearch] = useState("");
   const [sortDirection, setSortDirection] = useState("0");
@@ -21,7 +21,7 @@ const TodoListWithCollapse   = ({ todos }: Props) => {
 
   const handleStatus = (item: ITodoElement) => {
     setChecked(!checked);
-    // You should not mutate the item directly, consider updating it immutably.
+    item.isComplete = !item.isComplete;
   };
 
   const handleCard = (item: ITodoElement) => {
@@ -40,7 +40,13 @@ const TodoListWithCollapse   = ({ todos }: Props) => {
   const sortedTodos = useMemo(
     () =>
       filterTodo.sort((a, b) =>
-        sortDirection === "0" ? (a.task > b.task ? 1 : -1) : a.task > b.task ? -1 : 1
+        sortDirection === "0"
+          ? a.task > b.task
+            ? 1
+            : -1
+          : a.task > b.task
+          ? -1
+          : 1
       ),
     [filterTodo, sortDirection]
   );
@@ -59,7 +65,10 @@ const TodoListWithCollapse   = ({ todos }: Props) => {
         <label htmlFor="Sort" className="m-2">
           Sort :
         </label>
-        <select onChange={(e) => setSortDirection(e.target.value)} className="m-2">
+        <select
+          onChange={(e) => setSortDirection(e.target.value)}
+          className="m-2"
+        >
           <option value={"0"}>A-Z</option>
           <option value={"1"}>Z-A</option>
         </select>
@@ -95,8 +104,10 @@ const TodoListWithCollapse   = ({ todos }: Props) => {
 
             <div className="card-body">
               <p className="card-text">
-                <strong>Status :</strong> {item.isComplete ? "Completed" : "Incomplete"}&nbsp;&nbsp;
-                <button className="btn btn-secondary"
+                <strong>Status :</strong>{" "}
+                {item.isComplete ? "Completed" : "Incomplete"}&nbsp;&nbsp;
+                <button
+                  className="btn btn-secondary"
                   onClick={() => handleToggleDetails(item.id)}
                   aria-expanded={expandedItemId === item.id}
                   aria-controls={`CE${item.id}`}
@@ -104,7 +115,9 @@ const TodoListWithCollapse   = ({ todos }: Props) => {
                   Description
                 </button>
                 <div
-                  className={`collapse ${expandedItemId === item.id ? "show" : ""}`}
+                  className={`collapse ${
+                    expandedItemId === item.id ? "show" : ""
+                  }`}
                   id={`CE${item.id}`}
                 >
                   <div className="card card-body">{item.description}</div>

@@ -14,10 +14,10 @@ const AddTask = () => {
       id: GenerateRandomNo(),
       task: title,
       isComplete: false,
-      dueDate : dueDate
+      dueDate: dueDate,
     };
 
-    fetch(process.env.REACT_APP_BASE_URL+"/todos", {
+    fetch(process.env.REACT_APP_BASE_URL + "/todos", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(todoItem),
@@ -30,16 +30,35 @@ const AddTask = () => {
 
   return (
     <div className="form-details text-center">
-        <form onSubmit={addTodo}>
-            <h2>- Add Task - </h2>
-            <label htmlFor="title">Title : </label>
-            <input type="text" name="title" id="title" value={title} onChange={(e)=>setTitle(e.target.value)} required/><br/>
-            
-            <label htmlFor="due-date">Due Date : </label>
-            <input type="date" name="dueDate" id="dueDate" value={dueDate} onChange={(e)=>setDueDate(e.target.value)} required/><br/><br/>
+      <form onSubmit={addTodo}>
+        <h2>- Add Task - </h2>
+        <label htmlFor="title">Title : </label>
+        <input
+          type="text"
+          name="title"
+          id="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+        <br />
 
-            <button className="btn btn-secondary" disabled={!Boolean(title.length)}>Add Task</button>
-        </form>
+        <label htmlFor="due-date">Due Date : </label>
+        <input
+          type="date"
+          name="dueDate"
+          id="dueDate"
+          value={dueDate}
+          onChange={(e) => setDueDate(e.target.value)}
+          required
+        />
+        <br />
+        <br />
+
+        <button className="btn btn-secondary" disabled={!Boolean(title.length)}>
+          Add Task
+        </button>
+      </form>
     </div>
   );
 };

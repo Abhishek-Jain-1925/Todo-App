@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 interface ITodoElement {
   id: string;
   task: string;
-  description:string;
+  description: string;
   isComplete: boolean;
 }
 
@@ -32,20 +32,43 @@ const TodoList = ({ todos }: Props) => {
   //   setFilteredTodos(todos.filter((todo)=>todo.task.includes(search)))
   // },[search, filteredTodos])
   //or
-  const filterTodo = useMemo(()=>todos.filter((todo)=> todo.task.includes(search)),
-  [search,todos])
+  const filterTodo = useMemo(
+    () => todos.filter((todo) => todo.task.includes(search)),
+    [search, todos]
+  );
 
-  const sortedTodos = useMemo(()=>
-    filterTodo.sort((a,b)=>sortDirection==="0" ? (a.task > b.task ? 1 : -1) : (a.task > b.task ? -1 : 1))
-  ,[filterTodo, sortDirection])
+  const sortedTodos = useMemo(
+    () =>
+      filterTodo.sort((a, b) =>
+        sortDirection === "0"
+          ? a.task > b.task
+            ? 1
+            : -1
+          : a.task > b.task
+          ? -1
+          : 1
+      ),
+    [filterTodo, sortDirection]
+  );
 
   return (
     <div className="blog-list text-center">
-      <div style={{display:"flex"}} className="justify-content-center">
-        <input type="text" placeholder="search todos" value={search} className="m-2" onChange={(e)=>setSearch(e.target.value)}/>
+      <div style={{ display: "flex" }} className="justify-content-center">
+        <input
+          type="text"
+          placeholder="Search Todos"
+          value={search}
+          className="m-2"
+          onChange={(e) => setSearch(e.target.value)}
+        />
 
-        <label htmlFor="Sort" className="m-2">Sort :</label>
-        <select onChange={(e)=> setSortDirection(e.target.value)} className="m-2" >
+        <label htmlFor="Sort" className="m-2">
+          Sort :
+        </label>
+        <select
+          onChange={(e) => setSortDirection(e.target.value)}
+          className="m-2"
+        >
           <option value={"0"}>A-Z</option>
           <option value={"1"}>Z-A</option>
         </select>
@@ -53,25 +76,34 @@ const TodoList = ({ todos }: Props) => {
 
       {sortedTodos.map((item) => (
         <center>
-          <div className="card w-50" key={item.id}
-             style={{
+          <div
+            className="card w-50"
+            key={item.id}
+            style={{
               border: "0.1px solid grey",
               margin: "10px",
               cursor: "pointer",
-            }} >
-            <div className="card-header"
+            }}
+          >
+            <div
+              className="card-header"
               style={{
                 textDecoration: item.isComplete ? "line-through" : "none",
-              }} >
-              <div style={{display:"flex"}}>
-                <input type="checkbox" name={item.task} checked={item.isComplete} onChange={() => handleStatus(item)} />{" "} &nbsp;&nbsp;
-                <h3 onClick={() => handleCard(item)}>
-                {item.task}
-                </h3>
+              }}
+            >
+              <div style={{ display: "flex" }}>
+                <input
+                  type="checkbox"
+                  name={item.task}
+                  checked={item.isComplete}
+                  onChange={() => handleStatus(item)}
+                />{" "}
+                &nbsp;&nbsp;
+                <h3 onClick={() => handleCard(item)}>{item.task}</h3>
               </div>
             </div>
 
-            <div className="card-body" >
+            <div className="card-body">
               <p className="card-text">
                 <strong>Status :</strong>{" "}
                 {item.isComplete ? "Completed" : "Incomplete"}&nbsp;&nbsp;
