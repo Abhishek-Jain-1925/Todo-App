@@ -47,6 +47,30 @@
       "isComplete": false,
       "dueDate": "2024-03-23",
       "id": "YjnXZDY"
+    },
+    {
+      "task": "React project",
+      "description": "Do follow the deadline of project of react",
+      "assignee": "Abhishek Jain",
+      "isComplete": true,
+      "dueDate": "2024-03-23",
+      "id": "Wzn1plS"
+    },
+    {
+      "task": "Resume Parser",
+      "description": "learn about NameBasedSearch, tagging, efficiency improvement",
+      "assignee": "Abhishek Jain",
+      "isComplete": false,
+      "dueDate": "2024-05-25",
+      "id": "ThgAzyb"
+    },
+    {
+      "task": "Chat Pilot ",
+      "description": "Langchain, LLMs, OpenAI",
+      "assignee": "Abhishek Jain",
+      "isComplete": true,
+      "dueDate": "2024-03-30",
+      "id": "mSpKMj7"
     }
   ]
 }

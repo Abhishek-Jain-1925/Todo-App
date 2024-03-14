@@ -1,3 +1,5 @@
+//**** Instead this Added New Component(TodoList_withPaination), this is only for Future Ref. Purpose */
+
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ITodoElement, Props } from "../types/todo";
@@ -29,7 +31,7 @@ const TodoList = ({ todos }: Props) => {
     queryKey: ["todo"],
     queryFn: () => {
       return fetchGet("/todos", { _limit: pageSize, _page: pageNumber }).then(
-        (res) => res.data
+        (res: any) => res.data
       );
     },
   });

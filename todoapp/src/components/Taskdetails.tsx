@@ -1,4 +1,4 @@
-import useFetch from "./useFetch";
+import useFetch from "../custom_hooks/useFetch";
 import { useParams, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
