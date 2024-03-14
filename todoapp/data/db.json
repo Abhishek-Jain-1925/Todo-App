@@ -1,50 +1,52 @@
 {
   "todos": [
     {
-      "id": "3",
-      "task": "Assignment on LMS",
-      "isComplete": true,
-      "dueDate": "2024-03-07"
-    },
-    {
-      "id": "\"1262.7694724105472\"",
-      "task": "Python Assignment",
-      "description": "Do Assignment No.200",
+      "id": "5133",
+      "task": "Aai's Birthday",
+      "description": "Must do Resto Booking",
       "assignee": "Abhishek Jain",
       "isComplete": false,
-      "dueDate": "2024-03-07"
+      "dueDate": "2024-03-19"
     },
     {
-      "id": "\"1156.7947760726431\"",
-      "task": "Django WebPack",
-      "description": "Learn about Django Suite, LLM, Langchain",
-      "assignee": "Abhishek Jain",
-      "isComplete": false,
-      "dueDate": "2024-03-10"
-    },
-    {
-      "id": "\"1769.299710740329\"",
+      "id": "f8d1",
       "task": "Python Session",
-      "description": "watch session no 99",
-      "assignee": "SpUnique Brand",
+      "description": "Do learn session no.199",
+      "assignee": "Abhishek Jain",
       "isComplete": false,
       "dueDate": "2024-03-29"
     },
     {
-      "id": "\"1432.3324018982694\"",
-      "task": "Aai's Birthday",
-      "description": "mandatory to do book resto ",
-      "assignee": "Abhishek Jain",
+      "id": "1410",
+      "task": "Python Assignment",
+      "description": "Assignment submission",
+      "assignee": "SpUnique Brand",
       "isComplete": false,
       "dueDate": "2024-03-30"
     },
     {
-      "id": "e446",
-      "task": "sumit's Birthday",
-      "description": ";lkjhgfdxrtyuiop;lkjhg",
-      "assignee": "[p;lkjhgf m,",
+      "id": "c7bc",
+      "task": "Django WebPack",
+      "description": "Do learn about Langchain, llms, OpenAI",
+      "assignee": "Abhishek Jain",
       "isComplete": false,
-      "dueDate": "2024-03-29"
+      "dueDate": "2024-03-22"
+    },
+    {
+      "id": "ec64",
+      "task": "React Assignment 9",
+      "description": "Finish all assignment by today EOD",
+      "assignee": "Abhishek Jain",
+      "isComplete": true,
+      "dueDate": "2024-03-28"
+    },
+    {
+      "task": "Sandhya's Party",
+      "description": "want to go for mac donald's ",
+      "assignee": "Abhishek Jain",
+      "isComplete": false,
+      "dueDate": "2024-03-23",
+      "id": "YjnXZDY"
     }
   ]
 }

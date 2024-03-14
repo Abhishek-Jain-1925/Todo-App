@@ -1,3 +1,3 @@
-export const GenerateRandomNo = ()=>{
-    return `"${Math.random() * 2000}"`
-  }
+export const GenerateRandomNo = () => {
+  return `"${Math.random() * 2000}"`;
+};
