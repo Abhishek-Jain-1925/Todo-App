@@ -8,12 +8,12 @@ import { useQuery } from "@tanstack/react-query";
 
 const TodoList = ({ todos }: Props) => {
   const navigate = useNavigate();
-  const [checked, setChecked] = useState(false);
-  const [search, setSearch] = useState("");
-  const [sortDirection, setSortDirection] = useState("0");
+  const [checked, setChecked] = useState<boolean>(false);
+  const [search, setSearch] = useState<string>("");
+  const [sortDirection, setSortDirection] = useState<string>("0");
   //const [filteredTodos, setFilteredTodos] = useState(todos); //Optional, when using useEffect only
   const pageSize = 3;
-  const [pageNumber, setPageNumber] = useState(1);
+  const [pageNumber, setPageNumber] = useState<number>(1);
 
   const handleStatus = (item: ITodoElement) => {
     setChecked(!checked);

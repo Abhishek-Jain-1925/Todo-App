@@ -8,18 +8,15 @@ import Taskdetails from "./components/Taskdetails";
 import CreateTask from "./components/CreateTask";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-} from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
+const toast_timer = 3000;
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className="contents">
+    <div className="contents">
+      <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <Navbar />
           <Routes>
@@ -31,10 +28,10 @@ function App() {
 
             <Route path="*" element={<NotFound />}></Route>
           </Routes>
-        </BrowserRouter>{" "}
-        <ToastContainer autoClose={3000} />
-      </div>
-    </QueryClientProvider>
+        </BrowserRouter>
+        <ToastContainer autoClose={toast_timer} />
+      </QueryClientProvider>
+    </div>
   );
 }
 
