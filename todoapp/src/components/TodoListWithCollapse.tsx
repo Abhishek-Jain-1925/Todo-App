@@ -2,44 +2,38 @@
 
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ITodoElement, Props } from "../types/todo";
-import { fetchGet, fetchPatch } from "../services/api";
-import { useQuery } from "@tanstack/react-query";
 
-const TodoList = ({ todos }: Props) => {
-  const navigate = useNavigate();
+interface ITodoElement {
+  id: string;
+  task: string;
+  description: string;
+  isComplete: boolean;
+}
+
+interface Props {
+  todos: ITodoElement[];
+}
+
+const TodoListWithCollapse = ({ todos }: Props) => {
   const [checked, setChecked] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
   const [sortDirection, setSortDirection] = useState<string>("0");
-  //const [filteredTodos, setFilteredTodos] = useState(todos); //Optional, when using useEffect only
-  const pageSize = 3;
-  const [pageNumber, setPageNumber] = useState<number>(1);
+  const [expandedItemId, setExpandedItemId] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const handleStatus = (item: ITodoElement) => {
     setChecked(!checked);
     item.isComplete = !item.isComplete;
-    const updatedItem = { ...item, isComplete: !item.isComplete };
-
-    fetchPatch("/todos/" + item.id, updatedItem).then((res) => res);
   };
 
   const handleCard = (item: ITodoElement) => {
     navigate(`/task/${item.id}`);
   };
 
-  const { data, isPending, error } = useQuery({
-    queryKey: ["todo"],
-    queryFn: () => {
-      return fetchGet("/todos", { _limit: pageSize, _page: pageNumber }).then(
-        (res: any) => res.data
-      );
-    },
-  });
+  const handleToggleDetails = (itemId: string) => {
+    setExpandedItemId(expandedItemId === itemId ? null : itemId);
+  };
 
-  // useEffect(()=>{
-  //   setFilteredTodos(todos.filter((todo)=>todo.task.includes(search)))
-  // },[search, filteredTodos])
-  //or
   const filterTodo = useMemo(
     () => todos.filter((todo) => todo.task.includes(search)),
     [search, todos]
@@ -59,19 +53,12 @@ const TodoList = ({ todos }: Props) => {
     [filterTodo, sortDirection]
   );
 
-  const handlePrevClick = () => {
-    setPageNumber(pageNumber - 1);
-  };
-  const handleNextClick = () => {
-    setPageNumber(pageNumber + 1);
-  };
-
   return (
     <div className="blog-list text-center">
       <div style={{ display: "flex" }} className="justify-content-center">
         <input
           type="text"
-          placeholder="Search Todos"
+          placeholder="search todos"
           value={search}
           className="m-2"
           onChange={(e) => setSearch(e.target.value)}
@@ -88,12 +75,11 @@ const TodoList = ({ todos }: Props) => {
           <option value={"1"}>Z-A</option>
         </select>
       </div>
-      {isPending && <p>Loading...</p>}
+
       {sortedTodos.map((item) => (
-        <center>
+        <center key={item.id}>
           <div
             className="card w-50"
-            key={item.id}
             style={{
               border: "0.1px solid grey",
               margin: "10px",
@@ -122,20 +108,29 @@ const TodoList = ({ todos }: Props) => {
               <p className="card-text">
                 <strong>Status :</strong>{" "}
                 {item.isComplete ? "Completed" : "Incomplete"}&nbsp;&nbsp;
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => handleToggleDetails(item.id)}
+                  aria-expanded={expandedItemId === item.id}
+                  aria-controls={`CE${item.id}`}
+                >
+                  Description
+                </button>
+                <div
+                  className={`collapse ${
+                    expandedItemId === item.id ? "show" : ""
+                  }`}
+                  id={`CE${item.id}`}
+                >
+                  <div className="card card-body">{item.description}</div>
+                </div>
               </p>
             </div>
           </div>
         </center>
       ))}
-      <div className="footer">
-        <button onClick={handlePrevClick} disabled={pageNumber === 1}>
-          Prev
-        </button>
-        {pageNumber}
-        <button onClick={handleNextClick}>Next</button>
-      </div>
     </div>
   );
 };
 
-export default TodoList;
+export default TodoListWithCollapse;
